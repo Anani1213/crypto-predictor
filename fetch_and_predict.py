@@ -4,24 +4,27 @@ import datetime
 import requests
 
 COINS = [
-    {"symbol": "BTC", "binance_symbol": "BTCUSDT"},
-    {"symbol": "ETH", "binance_symbol": "ETHUSDT"},
-    {"symbol": "BNB", "binance_symbol": "BNBUSDT"},
-    {"symbol": "SOL", "binance_symbol": "SOLUSDT"},
-    {"symbol": "XRP", "binance_symbol": "XRPUSDT"},
-    {"symbol": "ADA", "binance_symbol": "ADAUSDT"},
-    {"symbol": "DOGE", "binance_symbol": "DOGEUSDT"}
+    {"symbol": "BTC", "coingecko_id": "bitcoin"},
+    {"symbol": "ETH", "coingecko_id": "ethereum"},
+    {"symbol": "BNB", "coingecko_id": "binancecoin"},
+    {"symbol": "SOL", "coingecko_id": "solana"},
+    {"symbol": "XRP", "coingecko_id": "ripple"},
+    {"symbol": "ADA", "coingecko_id": "cardano"},
+    {"symbol": "DOGE", "coingecko_id": "dogecoin"}
 ]
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 
 def get_live_crypto_data(coin):
     try:
-        # Fetching real-time 1m candles directly from Binance (Matches Google/TradingView exactly)
-        url = f"https://api.binance.com/api/v3/klines?symbol={coin['binance_symbol']}&interval=15m&limit=10"
+        url = f"https://api.coingecko.com/api/v3/coins/{coin['coingecko_id']}/market_chart?vs_currency=usd&days=1"
         res = requests.get(url, timeout=15).json()
         
-        history_prices = [float(candle[4]) for candle in res] if isinstance(res, list) and len(res) > 0 else [100, 100, 100, 100, 100, 100, 100, 100]
+        prices = res.get("prices", [])
+        if not prices:
+            raise Exception("No price data found")
+            
+        history_prices = [p[1] for p in prices[-8:]]
         current_price = history_prices[-1]
         
         high_24h = max(history_prices) * 1.01
@@ -37,7 +40,7 @@ def get_live_crypto_data(coin):
             "history": history_prices
         }
     except Exception as e:
-        print(f"Binance Error for {coin['symbol']}: {e}")
+        print(f"Error for {coin['symbol']}: {e}")
         return None
 
 def analyze_with_gemini(coin_data):
@@ -59,7 +62,7 @@ def analyze_with_gemini(coin_data):
     - 24h High: ${coin_data['high_24h']}     - 24h Low:${coin_data['low_24h']}
     - Recent Prices: {coin_data['history']}
 
-    Predict short-term prices for +15m, +30m, and +60m. 
+    Predict short-term prices for +15m, +30m, and +60m based on the current price ${cp}. 
     IMPORTANT: The summary MUST be written strictly in professional English. Do NOT use any other language like Amharic.
     
     Return ONLY a valid raw JSON object matching EXACTLY this structure without any markdown wrap:
