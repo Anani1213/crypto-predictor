@@ -1,4 +1,215 @@
 {
-  "updated_at": "2026-07-30 06:50:53 UTC",
-  "data": []
+  "updated_at": "2026-07-30 06:56:51 UTC",
+  "data": [
+    {
+      "symbol": "BTC",
+      "full_symbol": "BTCUSDT",
+      "market": {
+        "symbol": "BTCUSDT",
+        "price": 91000,
+        "high_24h": 92820.0,
+        "low_24h": 89180.0,
+        "volume_24h": 5000,
+        "price_change_pct": 1.2,
+        "history": [
+          90090.0,
+          90272.0,
+          90545.0,
+          90727.0,
+          90818.0,
+          90909.0,
+          91000,
+          91000
+        ]
+      },
+      "ai": {
+        "signal": "BULLISH",
+        "confidence": 70,
+        "pred_15m": 91091.0,
+        "pred_30m": 91182.0,
+        "pred_60m": 91364.0,
+        "summary": "በገበያው ላይ የሚታየው ግፊት አዎንታዊ ዋጋዎችን ሊያስከትል ይችላል።"
+      }
+    },
+    {
+      "symbol": "ETH",
+      "full_symbol": "ETHUSDT",
+      "market": {
+        "symbol": "ETHUSDT",
+        "price": 3400,
+        "high_24h": 3468.0,
+        "low_24h": 3332.0,
+        "volume_24h": 5000,
+        "price_change_pct": 1.2,
+        "history": [
+          3366.0,
+          3372.8,
+          3383.0,
+          3389.8,
+          3393.2,
+          3396.6,
+          3400,
+          3400
+        ]
+      },
+      "ai": {
+        "signal": "BULLISH",
+        "confidence": 70,
+        "pred_15m": 3403.4,
+        "pred_30m": 3406.8,
+        "pred_60m": 3413.6,
+        "summary": "በገበያው ላይ የሚታየው ግፊት አዎንታዊ ዋጋዎችን ሊያስከትል ይችላል።"
+      }
+    },
+    {
+      "symbol": "BNB",
+      "full_symbol": "BNBUSDT",
+      "market": {
+        "symbol": "BNBUSDT",
+        "price": 650,
+        "high_24h": 663.0,
+        "low_24h": 637.0,
+        "volume_24h": 5000,
+        "price_change_pct": 1.2,
+        "history": [
+          643.5,
+          644.8,
+          646.75,
+          648.05,
+          648.7,
+          649.35,
+          650,
+          650
+        ]
+      },
+      "ai": {
+        "signal": "BULLISH",
+        "confidence": 70,
+        "pred_15m": 650.65,
+        "pred_30m": 651.3,
+        "pred_60m": 652.6,
+        "summary": "በገበያው ላይ የሚታየው ግፊት አዎንታዊ ዋጋዎችን ሊያስከትል ይችላል።"
+      }
+    },
+    {
+      "symbol": "SOL",
+      "full_symbol": "SOLUSDT",
+      "market": {
+        "symbol": "SOLUSDT",
+        "price": 180,
+        "high_24h": 183.6,
+        "low_24h": 176.4,
+        "volume_24h": 5000,
+        "price_change_pct": 1.2,
+        "history": [
+          178.2,
+          178.56,
+          179.1,
+          179.46,
+          179.64,
+          179.82,
+          180,
+          180
+        ]
+      },
+      "ai": {
+        "signal": "BULLISH",
+        "confidence": 70,
+        "pred_15m": 180.18,
+        "pred_30m": 180.36,
+        "pred_60m": 180.72,
+        "summary": "በገበያው ላይ የሚታየው ግፊት አዎንታዊ ዋጋዎችን ሊያስከትል ይችላል።"
+      }
+    },
+    {
+      "symbol": "XRP",
+      "full_symbol": "XRPUSDT",
+      "market": {
+        "symbol": "XRPUSDT",
+        "price": 0.6,
+        "high_24h": 0.612,
+        "low_24h": 0.588,
+        "volume_24h": 5000,
+        "price_change_pct": 1.2,
+        "history": [
+          0.594,
+          0.5952,
+          0.597,
+          0.5982,
+          0.5988,
+          0.5993999999999999,
+          0.6,
+          0.6
+        ]
+      },
+      "ai": {
+        "signal": "BULLISH",
+        "confidence": 70,
+        "pred_15m": 0.6006,
+        "pred_30m": 0.6012,
+        "pred_60m": 0.6024,
+        "summary": "በገበያው ላይ የሚታየው ግፊት አዎንታዊ ዋጋዎችን ሊያስከትል ይችላል።"
+      }
+    },
+    {
+      "symbol": "ADA",
+      "full_symbol": "ADAUSDT",
+      "market": {
+        "symbol": "ADAUSDT",
+        "price": 0.4,
+        "high_24h": 0.40800000000000003,
+        "low_24h": 0.392,
+        "volume_24h": 5000,
+        "price_change_pct": 1.2,
+        "history": [
+          0.396,
+          0.39680000000000004,
+          0.398,
+          0.39880000000000004,
+          0.3992,
+          0.3996,
+          0.4,
+          0.4
+        ]
+      },
+      "ai": {
+        "signal": "BULLISH",
+        "confidence": 70,
+        "pred_15m": 0.4004,
+        "pred_30m": 0.4008,
+        "pred_60m": 0.4016,
+        "summary": "በገበያው ላይ የሚታየው ግፊት አዎንታዊ ዋጋዎችን ሊያስከትል ይችላል።"
+      }
+    },
+    {
+      "symbol": "DOGE",
+      "full_symbol": "DOGEUSDT",
+      "market": {
+        "symbol": "DOGEUSDT",
+        "price": 0.12,
+        "high_24h": 0.1224,
+        "low_24h": 0.1176,
+        "volume_24h": 5000,
+        "price_change_pct": 1.2,
+        "history": [
+          0.11879999999999999,
+          0.11903999999999999,
+          0.11939999999999999,
+          0.11964,
+          0.11975999999999999,
+          0.11988,
+          0.12,
+          0.12
+        ]
+      },
+      "ai": {
+        "signal": "BULLISH",
+        "confidence": 70,
+        "pred_15m": 0.1201,
+        "pred_30m": 0.1202,
+        "pred_60m": 0.1205,
+        "summary": "በገበያው ላይ የሚታየው ግፊት አዎንታዊ ዋጋዎችን ሊያስከትል ይችላል።"
+      }
+    }
+  ]
 }
