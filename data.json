@@ -1,33 +1,33 @@
 {
-  "updated_at": "2026-07-30 07:34:41 UTC",
+  "updated_at": "2026-07-30 07:38:40 UTC",
   "data": [
     {
       "symbol": "BTC",
       "full_symbol": "BTCUSDT",
       "market": {
         "symbol": "BTC",
-        "price": 100,
-        "high_24h": 101.0,
-        "low_24h": 99.0,
-        "volume_24h": 1500000,
+        "price": 63891.639764848864,
+        "high_24h": 64676.94147893988,
+        "low_24h": 63252.72336720037,
+        "volume_24h": 958374596.4727329,
         "price_change_pct": 2.5,
         "history": [
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100
+          64036.57572172265,
+          63973.178255507184,
+          63985.191276086305,
+          63995.53415274297,
+          64028.934355729216,
+          63994.151522247514,
+          63921.88290728395,
+          63891.639764848864
         ]
       },
       "ai": {
         "signal": "BULLISH",
         "confidence": 75,
-        "pred_15m": 100.1,
-        "pred_30m": 100.2,
-        "pred_60m": 100.3,
+        "pred_15m": 63955.5314,
+        "pred_30m": 64019.423,
+        "pred_60m": 64083.3147,
         "summary": "Market conditions remain stable with positive short-term indicators."
       }
     },
@@ -36,28 +36,28 @@
       "full_symbol": "ETHUSDT",
       "market": {
         "symbol": "ETH",
-        "price": 100,
-        "high_24h": 101.0,
-        "low_24h": 99.0,
-        "volume_24h": 1500000,
+        "price": 1900.1121502912827,
+        "high_24h": 1923.259378217275,
+        "low_24h": 1881.1110287883698,
+        "volume_24h": 28501682.25436924,
         "price_change_pct": 2.5,
         "history": [
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100
+          1904.2172061557178,
+          1902.0671681396088,
+          1903.026860845784,
+          1903.1937499351804,
+          1903.8999045317605,
+          1903.0947056976327,
+          1900.320314420967,
+          1900.1121502912827
         ]
       },
       "ai": {
         "signal": "BULLISH",
         "confidence": 75,
-        "pred_15m": 100.1,
-        "pred_30m": 100.2,
-        "pred_60m": 100.3,
+        "pred_15m": 1902.0123,
+        "pred_30m": 1903.9124,
+        "pred_60m": 1905.8125,
         "summary": "Market conditions remain stable with positive short-term indicators."
       }
     },
@@ -66,28 +66,28 @@
       "full_symbol": "BNBUSDT",
       "market": {
         "symbol": "BNB",
-        "price": 100,
-        "high_24h": 101.0,
-        "low_24h": 99.0,
-        "volume_24h": 1500000,
+        "price": 573.981046212433,
+        "high_24h": 580.8334108981275,
+        "low_24h": 568.2289362980324,
+        "volume_24h": 8609715.693186494,
         "price_change_pct": 2.5,
         "history": [
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100
+          574.2285345883114,
+          574.1965402716705,
+          574.5442992815352,
+          574.4828671785391,
+          575.0825850476509,
+          574.5338268976109,
+          573.968622523265,
+          573.981046212433
         ]
       },
       "ai": {
         "signal": "BULLISH",
         "confidence": 75,
-        "pred_15m": 100.1,
-        "pred_30m": 100.2,
-        "pred_60m": 100.3,
+        "pred_15m": 574.555,
+        "pred_30m": 575.129,
+        "pred_60m": 575.703,
         "summary": "Market conditions remain stable with positive short-term indicators."
       }
     },
@@ -96,28 +96,28 @@
       "full_symbol": "SOLUSDT",
       "market": {
         "symbol": "SOL",
-        "price": 100,
-        "high_24h": 101.0,
-        "low_24h": 99.0,
-        "volume_24h": 1500000,
+        "price": 73.44833027518722,
+        "high_24h": 74.37974122591118,
+        "low_24h": 72.71384697243535,
+        "volume_24h": 1101724.9541278083,
         "price_change_pct": 2.5,
         "history": [
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100
+          73.57824296438254,
+          73.62933854902595,
+          73.64330814446652,
+          73.60960548304918,
+          73.64078372404323,
+          73.6163729113693,
+          73.47796164352603,
+          73.44833027518722
         ]
       },
       "ai": {
         "signal": "BULLISH",
         "confidence": 75,
-        "pred_15m": 100.1,
-        "pred_30m": 100.2,
-        "pred_60m": 100.3,
+        "pred_15m": 73.5218,
+        "pred_30m": 73.5952,
+        "pred_60m": 73.6687,
         "summary": "Market conditions remain stable with positive short-term indicators."
       }
     },
@@ -126,88 +126,28 @@
       "full_symbol": "XRPUSDT",
       "market": {
         "symbol": "XRP",
-        "price": 100,
-        "high_24h": 101.0,
-        "low_24h": 99.0,
-        "volume_24h": 1500000,
+        "price": 1.0767419611293425,
+        "high_24h": 1.0877394539985752,
+        "low_24h": 1.0627671253915385,
+        "volume_24h": 16151.129416940137,
         "price_change_pct": 2.5,
         "history": [
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100
+          1.07350214686014,
+          1.0748190123822954,
+          1.0750329551691897,
+          1.0756830694900608,
+          1.0766241893748614,
+          1.0769697564342329,
+          1.076774990272785,
+          1.0767419611293425
         ]
       },
       "ai": {
         "signal": "BULLISH",
         "confidence": 75,
-        "pred_15m": 100.1,
-        "pred_30m": 100.2,
-        "pred_60m": 100.3,
-        "summary": "Market conditions remain stable with positive short-term indicators."
-      }
-    },
-    {
-      "symbol": "ADA",
-      "full_symbol": "ADAUSDT",
-      "market": {
-        "symbol": "ADA",
-        "price": 100,
-        "high_24h": 101.0,
-        "low_24h": 99.0,
-        "volume_24h": 1500000,
-        "price_change_pct": 2.5,
-        "history": [
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100
-        ]
-      },
-      "ai": {
-        "signal": "BULLISH",
-        "confidence": 75,
-        "pred_15m": 100.1,
-        "pred_30m": 100.2,
-        "pred_60m": 100.3,
-        "summary": "Market conditions remain stable with positive short-term indicators."
-      }
-    },
-    {
-      "symbol": "DOGE",
-      "full_symbol": "DOGEUSDT",
-      "market": {
-        "symbol": "DOGE",
-        "price": 100,
-        "high_24h": 101.0,
-        "low_24h": 99.0,
-        "volume_24h": 1500000,
-        "price_change_pct": 2.5,
-        "history": [
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100,
-          100
-        ]
-      },
-      "ai": {
-        "signal": "BULLISH",
-        "confidence": 75,
-        "pred_15m": 100.1,
-        "pred_30m": 100.2,
-        "pred_60m": 100.3,
+        "pred_15m": 1.0778,
+        "pred_30m": 1.0789,
+        "pred_60m": 1.08,
         "summary": "Market conditions remain stable with positive short-term indicators."
       }
     }
