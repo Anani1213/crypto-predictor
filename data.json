@@ -1,34 +1,34 @@
 {
-  "updated_at": "2026-07-30 07:23:11 UTC",
+  "updated_at": "2026-07-30 07:34:41 UTC",
   "data": [
     {
       "symbol": "BTC",
       "full_symbol": "BTCUSDT",
       "market": {
         "symbol": "BTC",
-        "price": 64038.19050000314,
-        "high_24h": 64678.57240500317,
-        "low_24h": 63277.55255142431,
-        "volume_24h": 960572857.5000471,
+        "price": 100,
+        "high_24h": 101.0,
+        "low_24h": 99.0,
+        "volume_24h": 1500000,
         "price_change_pct": 2.5,
         "history": [
-          63924.41810134495,
-          63916.71974891345,
-          63921.01515185131,
-          64036.57572172265,
-          63973.178255507184,
-          63985.191276086305,
-          63995.53415274297,
-          64038.19050000314
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
         ]
       },
       "ai": {
         "signal": "BULLISH",
         "confidence": 75,
-        "pred_15m": 64102.2287,
-        "pred_30m": 64166.2669,
-        "pred_60m": 64230.3051,
-        "summary": "የገበያው አቅጣጫ የተረጋጋ እና ፖዘቲቭ ነው።"
+        "pred_15m": 100.1,
+        "pred_30m": 100.2,
+        "pred_60m": 100.3,
+        "summary": "Market conditions remain stable with positive short-term indicators."
       }
     },
     {
@@ -36,29 +36,29 @@
       "full_symbol": "ETHUSDT",
       "market": {
         "symbol": "ETH",
-        "price": 1904.1433670898643,
-        "high_24h": 1923.259378217275,
-        "low_24h": 1879.268163798785,
-        "volume_24h": 28562150.506347965,
+        "price": 100,
+        "high_24h": 101.0,
+        "low_24h": 99.0,
+        "volume_24h": 1500000,
         "price_change_pct": 2.5,
         "history": [
-          1899.2840790790628,
-          1898.2506705038234,
-          1898.5983036753087,
-          1904.2172061557178,
-          1902.0671681396088,
-          1903.026860845784,
-          1903.1937499351804,
-          1904.1433670898643
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
         ]
       },
       "ai": {
         "signal": "BULLISH",
         "confidence": 75,
-        "pred_15m": 1906.0475,
-        "pred_30m": 1907.9517,
-        "pred_60m": 1909.8558,
-        "summary": "የገበያው አቅጣጫ የተረጋጋ እና ፖዘቲቭ ነው።"
+        "pred_15m": 100.1,
+        "pred_30m": 100.2,
+        "pred_60m": 100.3,
+        "summary": "Market conditions remain stable with positive short-term indicators."
       }
     },
     {
@@ -66,29 +66,29 @@
       "full_symbol": "BNBUSDT",
       "market": {
         "symbol": "BNB",
-        "price": 575.0638112910448,
-        "high_24h": 580.8144494039552,
-        "low_24h": 566.578905771011,
-        "volume_24h": 8625957.169365672,
+        "price": 100,
+        "high_24h": 101.0,
+        "low_24h": 99.0,
+        "volume_24h": 1500000,
         "price_change_pct": 2.5,
         "history": [
-          572.3019250212233,
-          572.6319222025542,
-          573.1515905192897,
-          574.3483619124337,
-          574.3221569151585,
-          574.5651666434609,
-          574.6730086201865,
-          575.0638112910448
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
         ]
       },
       "ai": {
         "signal": "BULLISH",
         "confidence": 75,
-        "pred_15m": 575.6389,
-        "pred_30m": 576.2139,
-        "pred_60m": 576.789,
-        "summary": "የገበያው አቅጣጫ የተረጋጋ እና ፖዘቲቭ ነው።"
+        "pred_15m": 100.1,
+        "pred_30m": 100.2,
+        "pred_60m": 100.3,
+        "summary": "Market conditions remain stable with positive short-term indicators."
       }
     },
     {
@@ -96,29 +96,29 @@
       "full_symbol": "SOLUSDT",
       "market": {
         "symbol": "SOL",
-        "price": 73.67153658960707,
-        "high_24h": 74.40825195550315,
-        "low_24h": 72.69413925507958,
-        "volume_24h": 1105073.048844106,
+        "price": 100,
+        "high_24h": 101.0,
+        "low_24h": 99.0,
+        "volume_24h": 1500000,
         "price_change_pct": 2.5,
         "history": [
-          73.50850699184092,
-          73.45761868038838,
-          73.42842348997937,
-          73.66517797106523,
-          73.62050818589151,
-          73.64550025902795,
-          73.6226158703289,
-          73.67153658960707
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
         ]
       },
       "ai": {
         "signal": "BULLISH",
         "confidence": 75,
-        "pred_15m": 73.7452,
-        "pred_30m": 73.8189,
-        "pred_60m": 73.8926,
-        "summary": "የገበያው አቅጣጫ የተረጋጋ እና ፖዘቲቭ ነው።"
+        "pred_15m": 100.1,
+        "pred_30m": 100.2,
+        "pred_60m": 100.3,
+        "summary": "Market conditions remain stable with positive short-term indicators."
       }
     },
     {
@@ -126,29 +126,29 @@
       "full_symbol": "XRPUSDT",
       "market": {
         "symbol": "XRP",
-        "price": 1.0767624178781292,
-        "high_24h": 1.0875300420569105,
-        "low_24h": 1.0609551256918996,
-        "volume_24h": 16151.436268171938,
+        "price": 100,
+        "high_24h": 101.0,
+        "low_24h": 99.0,
+        "volume_24h": 1500000,
         "price_change_pct": 2.5,
         "history": [
-          1.0722734490549393,
-          1.071671844133232,
-          1.0720097093780108,
-          1.0747416332217872,
-          1.074672758916943,
-          1.07534199754144,
-          1.0759684770509654,
-          1.0767624178781292
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
         ]
       },
       "ai": {
         "signal": "BULLISH",
         "confidence": 75,
-        "pred_15m": 1.0778,
-        "pred_30m": 1.0789,
-        "pred_60m": 1.08,
-        "summary": "የገበያው አቅጣጫ የተረጋጋ እና ፖዘቲቭ ነው።"
+        "pred_15m": 100.1,
+        "pred_30m": 100.2,
+        "pred_60m": 100.3,
+        "summary": "Market conditions remain stable with positive short-term indicators."
       }
     },
     {
@@ -178,7 +178,7 @@
         "pred_15m": 100.1,
         "pred_30m": 100.2,
         "pred_60m": 100.3,
-        "summary": "የገበያው አቅጣጫ የተረጋጋ እና ፖዘቲቭ ነው።"
+        "summary": "Market conditions remain stable with positive short-term indicators."
       }
     },
     {
@@ -208,7 +208,7 @@
         "pred_15m": 100.1,
         "pred_30m": 100.2,
         "pred_60m": 100.3,
-        "summary": "የገበያው አቅጣጫ የተረጋጋ እና ፖዘቲቭ ነው።"
+        "summary": "Market conditions remain stable with positive short-term indicators."
       }
     }
   ]
