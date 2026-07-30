@@ -1,681 +1,225 @@
 <!DOCTYPE html>
-<html lang="am">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Crypto Trading Terminal Pro</title>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js -->
+    <title>Crypto AI Predictor</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #07090e;
-            --surface-color: rgba(20, 24, 35, 0.7);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --text-main: #ffffff;
-            --text-muted: #8b9bb4;
-            --primary-glow: #00f2fe;
-            --bullish: #00e676;
-            --bearish: #ff5252;
-            --neutral: #ffab00;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(0, 242, 254, 0.05), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(138, 43, 226, 0.05), transparent 25%);
-            color: var(--text-main);
-            min-height: 100vh;
-            padding: 0 20px 40px 20px;
-        }
-
-        /* --- Navbar & Header --- */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--border-color);
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-icon {
-            font-size: 28px;
-            color: var(--primary-glow);
-            text-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
-        }
-
-        h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        h1 span {
-            color: var(--primary-glow);
-        }
-
-        /* --- Buttons --- */
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(79, 172, 254, 0.2));
-            border-color: var(--primary-glow);
-            color: var(--primary-glow);
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(135deg, rgba(0, 242, 254, 0.4), rgba(79, 172, 254, 0.4));
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
-        }
-
-        .btn-telegram {
-            background: rgba(0, 136, 204, 0.15);
-            border-color: #0088cc;
-            color: #00aaee;
-        }
-
-        .btn-telegram:hover {
-            background: rgba(0, 136, 204, 0.3);
-            box-shadow: 0 0 20px rgba(0, 136, 204, 0.4);
-        }
-
-        .spin {
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* --- Status Bar --- */
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            background: var(--surface-color);
-            backdrop-filter: blur(10px);
-            padding: 12px 25px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 30px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--primary-glow);
-            font-weight: 600;
-        }
-
-        .pulse-dot {
-            width: 10px;
-            height: 10px;
-            background-color: var(--primary-glow);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--primary-glow);
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 242, 254, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 242, 254, 0); }
-        }
-
-        /* --- Dashboard Grid --- */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 25px;
-        }
-
-        .glass-card {
-            background: var(--surface-color);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 25px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glass-card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.03), transparent);
-            transform: skewX(-20deg);
-            transition: 0.5s;
-        }
-
-        .glass-card:hover::before {
-            left: 150%;
-        }
-
-        .glass-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Card Header */
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .coin-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .coin-icon-wrapper {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: #fff;
-            border: 1px solid var(--border-color);
-        }
-
-        .coin-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-        }
-
-        .coin-subtitle {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        /* Signals */
-        .signal-badge {
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .signal-BULLISH {
-            background: rgba(0, 230, 118, 0.15);
-            color: var(--bullish);
-            border: 1px solid rgba(0, 230, 118, 0.3);
-            box-shadow: 0 0 10px rgba(0, 230, 118, 0.1);
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #0b0e11; color: #f3f4f6; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .container { width: 100%; max-width: 500px; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; width: 100%; }
+        .logo { font-size: 20px; font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 8px; }
+        .update-time { font-size: 12px; color: #9ca3af; background: #1f2937; padding: 6px 12px; border-radius: 20px; }
         
-        .signal-BEARISH {
-            background: rgba(255, 82, 82, 0.15);
-            color: var(--bearish);
-            border: 1px solid rgba(255, 82, 82, 0.3);
-            box-shadow: 0 0 10px rgba(255, 82, 82, 0.1);
-        }
+        /* Dashboard List Style */
+        .coin-list { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+        .coin-card { background: #161b22; border: 1px solid #30363d; border-radius: 14px; padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s; }
+        .coin-card:hover { border-color: #38bdf8; background: #1f242c; }
+        .coin-info { display: flex; flex-direction: column; gap: 4px; }
+        .coin-name { font-size: 16px; font-weight: 600; color: #fff; }
+        .coin-symbol { font-size: 12px; color: #9ca3af; }
+        .coin-price-box { text-align: right; }
+        .coin-price { font-size: 16px; font-weight: 600; color: #fff; }
+        .coin-change { font-size: 12px; font-weight: 500; }
+        .positive { color: #10b981; }
+        .negative { color: #ef4444; }
 
-        .signal-NEUTRAL {
-            background: rgba(255, 171, 0, 0.15);
-            color: var(--neutral);
-            border: 1px solid rgba(255, 171, 0, 0.3);
-        }
+        /* Detail View Style */
+        #detail-view { display: none; width: 100%; flex-direction: column; gap: 20px; }
+        .back-btn { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 500; width: fit-content; transition: 0.2s; }
+        .back-btn:hover { background: #30363d; color: #fff; }
+        
+        .detail-card { background: #161b22; border: 1px solid #30363d; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+        .signal-badge { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; width: fit-content; display: flex; align-items: center; gap: 6px; }
+        .badge-bullish { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-bearish { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+        
+        .price-display { font-size: 28px; font-weight: 700; color: #fff; }
+        .chart-container { position: relative; width: 100%; height: 220px; margin-top: 10px; }
+        
+        .summary-box { background: #0d1117; border-left: 3px solid #38bdf8; padding: 12px; border-radius: 0 8px 8px 0; font-size: 13px; color: #9ca3af; line-height: 1.5; }
 
-        /* Price Section */
-        .price-section {
-            margin-bottom: 20px;
-        }
-
-        .current-price {
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: -1px;
-            line-height: 1.2;
-        }
-
-        .change-pct {
-            font-size: 1rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .pct-up { color: var(--bullish); }
-        .pct-down { color: var(--bearish); }
-
-        /* Chart */
-        .chart-container {
-            height: 200px;
-            width: 100%;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        /* Table */
-        .pred-table-wrapper {
-            background: rgba(0,0,0,0.2);
-            border-radius: 12px;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-
-        th {
-            color: var(--text-muted);
-            font-weight: 500;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        td {
-            font-weight: 600;
-        }
-
-        .highlight-time {
-            color: var(--primary-glow);
-        }
-
-        /* AI Summary Box */
-        .ai-summary {
-            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-            border-left: 4px solid var(--primary-glow);
-            padding: 15px;
-            border-radius: 0 10px 10px 0;
-            font-size: 0.85rem;
-            line-height: 1.6;
-            color: #c9d1d9;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-        }
-
-        .ai-summary i {
-            color: var(--primary-glow);
-            font-size: 1.2rem;
-            margin-top: 2px;
-        }
-
-        /* Loading Skeleton */
-        .loading-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 50vh;
-            color: var(--primary-glow);
-        }
-
-        .loading-container i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .dashboard-grid { grid-template-columns: 1fr; }
-            nav { flex-direction: column; align-items: flex-start; }
-            .status-bar { flex-direction: column; gap: 10px; align-items: flex-start; }
-            .action-buttons { width: 100%; justify-content: space-between; }
-        }
+        /* Footer Style */
+        footer { margin-top: 30px; text-align: center; font-size: 11px; color: #6b7280; width: 100%; letter-spacing: 0.5px; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo-container">
-            <i class="fa-solid fa-bolt logo-icon"></i>
-            <h1>Crypto<span>AI</span> Predictor</h1>
-        </div>
-        <div class="action-buttons">
-            <button class="btn btn-telegram" onclick="window.open('https://t.me/share/url?url=' + encodeURIComponent(window.location.href) + '&text=የክሪፕቶ ትንበያዎችን በዚህ ድህረገጽ ይከታተሉ!', '_blank')">
-                <i class="fa-brands fa-telegram"></i> ሼር አድርግ
-            </button>
-            <button class="btn btn-primary" onclick="loadData(true)" id="refreshBtn">
-                <i class="fa-solid fa-arrows-rotate" id="refreshIcon"></i> አዲስ መረጃ አምጣ
-            </button>
-        </div>
-    </nav>
+    <div class="container">
+        <header>
+            <div class="logo">⚡ Crypto AI Predictor</div>
+            <div id="update-time" class="update-time">Loading...</div>
+        </header>
 
-    <div class="status-bar">
-        <div class="live-indicator">
-            <div class="pulse-dot"></div>
-            Gemini 1.5 Flash AI Active
+        <!-- HOME DASHBOARD VIEW -->
+        <div id="home-view">
+            <div id="coin-list" class="coin-list">
+                <!-- Coins will be loaded here dynamically -->
+            </div>
         </div>
-        <div id="last-update">
-            <i class="fa-regular fa-clock"></i> የመጨረሻ ዝመና፦ በመጫን ላይ...
+
+        <!-- DETAIL VIEW -->
+        <div id="detail-view">
+            <button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
+            <div class="detail-card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h2 id="det-title" style="font-size: 20px; font-weight: 700; color: #fff;">BTC</h2>
+                        <span id="det-subtitle" style="font-size: 12px; color: #9ca3af;">Tether US</span>
+                    </div>
+                    <div id="det-badge" class="signal-badge badge-bullish">BULLISH</div>
+                </div>
+                <div>
+                    <div id="det-price" class="price-display">$0.00</div>
+                    <div id="det-change" class="coin-change positive">+0.00% (24h)</div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="cryptoChart"></canvas>
+                </div>
+                <div id="det-summary" class="summary-box">
+                    Analyzing market conditions...
+                </div>
+            </div>
         </div>
+
+        <footer>Powered by ethio programmer</footer>
     </div>
-
-    <div id="loading" class="loading-container">
-        <i class="fa-solid fa-circle-notch fa-spin"></i>
-        <h2>የገበያ መረጃዎችን እና የ AI ትንተና በማዘጋጀት ላይ...</h2>
-    </div>
-
-    <div class="dashboard-grid" id="grid" style="display: none;">
-        <!-- Cards will be injected here by JavaScript -->
-    </div>
-
-    <footer>
-        <p>⚠️ <strong>ማሳሰቢያ፦</strong> ይህ መረጃ በ AI የተተነበየ እንጂ የፋይናንስ ምክር አይደለም። ክሪፕቶ ከረንሲ ከፍተኛ ስጋት (Risk) አለው።</p>
-        <p style="margin-top: 10px; opacity: 0.5;">Developed with ❤️ powered by GitHub Actions & Gemini API</p>
-    </footer>
 
     <script>
-        // Chart instances array to destroy them before re-rendering
-        let chartInstances = [];
+        let globalData = [];
+        let myChart = null;
 
-        async function loadData(isManualRefresh = false) {
-            const refreshIcon = document.getElementById('refreshIcon');
-            const refreshBtn = document.getElementById('refreshBtn');
-            const grid = document.getElementById('grid');
-            const loading = document.getElementById('loading');
-
-            if (isManualRefresh) {
-                refreshIcon.classList.add('spin');
-                refreshBtn.disabled = true;
-            }
-
+        async function loadData() {
             try {
-                // Fetch data with Cache Busting
-                const response = await fetch('data.json?t=' + new Date().getTime());
+                let response = await fetch('data.json?t=' + new Date().getTime());
+                let json = await response.json();
+                globalData = json.data;
+                document.getElementById('update-time').innerText = "Updated: " + json.updated_at.split(" ")[1] + " UTC";
                 
-                if (!response.ok) {
-                    throw new Error('Data file not found yet. Please wait for the first GitHub Action to run.');
-                }
-                
-                const payload = await response.json();
-
-                document.getElementById('last-update').innerHTML = `<i class="fa-regular fa-clock"></i> የመጨረሻ ዝመና፦ ${payload.updated_at}`;
-
-                // Clear previous charts
-                chartInstances.forEach(chart => chart.destroy());
-                chartInstances = [];
-                grid.innerHTML = '';
-
-                payload.data.forEach((item, index) => {
-                    const symbol = item.symbol;
-                    const market = item.market;
-                    const ai = item.ai;
-
-                    const isUp = market.price_change_pct >= 0;
-                    const pctClass = isUp ? 'pct-up' : 'pct-down';
-                    const changeSign = isUp ? '+' : '';
-                    const arrowIcon = isUp ? '<i class="fa-solid fa-arrow-trend-up"></i>' : '<i class="fa-solid fa-arrow-trend-down"></i>';
-
-                    let signalIcon = 'fa-minus';
-                    if(ai.signal === 'BULLISH') signalIcon = 'fa-rocket';
-                    if(ai.signal === 'BEARISH') signalIcon = 'fa-arrow-down-long';
-
-                    // Formatting prices beautifully
-                    const formatPrice = (price) => {
-                        return price < 1 ? price.toFixed(4) : price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    };
-
-                    const cardHtml = `
-                        <div class="glass-card">
-                            <div class="card-header">
-                                <div class="coin-info">
-                                    <div class="coin-icon-wrapper">
-                                        <i class="fa-brands fa-bitcoin"></i>
-                                    </div>
-                                    <div>
-                                        <div class="coin-title">${symbol}</div>
-                                        <div class="coin-subtitle">Tether US</div>
-                                    </div>
-                                </div>
-                                <div class="signal-badge signal-${ai.signal}">
-                                    <i class="fa-solid ${signalIcon}"></i> ${ai.signal} (${ai.confidence}%)
-                                </div>
-                            </div>
-
-                            <div class="price-section">
-                                <div class="current-price">$${formatPrice(market.price)}</div>
-                                <div class="change-pct ${pctClass}">
-                                    ${arrowIcon} ${changeSign}${market.price_change_pct.toFixed(2)}% (24h)
-                                </div>
-                            </div>
-
-                            <div class="chart-container">
-                                <canvas id="chart-${index}"></canvas>
-                            </div>
-
-                            <div class="pred-table-wrapper">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th><i class="fa-regular fa-hourglass-half"></i> ጊዜ</th>
-                                            <th class="highlight-time">+15 ደቂቃ</th>
-                                            <th class="highlight-time">+30 ደቂቃ</th>
-                                            <th class="highlight-time">+1 ሰዓት</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>ግምት</td>
-                                            <td>$${formatPrice(ai.pred_15m)}</td>
-                                            <td>$${formatPrice(ai.pred_30m)}</td>
-                                            <td>$${formatPrice(ai.pred_60m)}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="ai-summary">
-                                <i class="fa-solid fa-robot"></i>
-                                <div>
-                                    <strong>የ AI አስተያየት፡</strong><br>
-                                    ${ai.summary}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-
-                    grid.innerHTML += cardHtml;
-                });
-
-                // Hide loading, show grid
-                loading.style.display = 'none';
-                grid.style.display = 'grid';
-
-                // Render beautiful Gradient Line Charts
-                payload.data.forEach((item, index) => {
-                    const canvas = document.getElementById(`chart-${index}`);
-                    const ctx = canvas.getContext('2d');
-                    
-                    const history = item.market.history;
-                    const labels = ['-105m', '-90m', '-75m', '-60m', '-45m', '-30m', '-15m', 'አሁን', '+15m', '+30m', '+60m'];
-                    
-                    const historyData = [...history, null, null, null];
-                    const futureData = new Array(history.length - 1).fill(null);
-                    futureData.push(history[history.length - 1]); // Connect current price
-                    futureData.push(item.ai.pred_15m, item.ai.pred_30m, item.ai.pred_60m);
-
-                    // Setup Gradients for charts
-                    const historyGradient = ctx.createLinearGradient(0, 0, 0, 200);
-                    historyGradient.addColorStop(0, 'rgba(79, 172, 254, 0.4)');
-                    historyGradient.addColorStop(1, 'rgba(79, 172, 254, 0)');
-
-                    let futureColor = '#ffab00'; // Neutral
-                    let futureGradientStr = 'rgba(255, 171, 0,';
-                    if(item.ai.signal === 'BULLISH') {
-                        futureColor = '#00e676';
-                        futureGradientStr = 'rgba(0, 230, 118,';
-                    } else if (item.ai.signal === 'BEARISH') {
-                        futureColor = '#ff5252';
-                        futureGradientStr = 'rgba(255, 82, 82,';
-                    }
-
-                    const futureGradient = ctx.createLinearGradient(0, 0, 0, 200);
-                    futureGradient.addColorStop(0, futureGradientStr + ' 0.4)');
-                    futureGradient.addColorStop(1, futureGradientStr + ' 0)');
-
-                    const chart = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: labels,
-                            datasets: [
-                                {
-                                    label: 'ያለፈው ዋጋ',
-                                    data: historyData,
-                                    borderColor: '#4facfe',
-                                    backgroundColor: historyGradient,
-                                    borderWidth: 3,
-                                    pointRadius: 0,
-                                    fill: true,
-                                    tension: 0.4
-                                },
-                                {
-                                    label: 'AI ትንበያ',
-                                    data: futureData,
-                                    borderColor: futureColor,
-                                    backgroundColor: futureGradient,
-                                    borderWidth: 3,
-                                    borderDash: [5, 5],
-                                    pointRadius: 5,
-                                    pointBackgroundColor: varBgColor(),
-                                    pointBorderColor: futureColor,
-                                    pointBorderWidth: 2,
-                                    fill: true,
-                                    tension: 0.3
-                                }
-                            ]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            interaction: { intersect: false, mode: 'index' },
-                            plugins: {
-                                legend: { display: false },
-                                tooltip: {
-                                    backgroundColor: 'rgba(20, 24, 35, 0.9)',
-                                    titleFont: { family: 'Poppins', size: 13 },
-                                    bodyFont: { family: 'Poppins', size: 14, weight: 'bold' },
-                                    padding: 12,
-                                    borderColor: 'rgba(255,255,255,0.1)',
-                                    borderWidth: 1,
-                                    displayColors: false
-                                }
-                            },
-                            scales: {
-                                x: { 
-                                    grid: { display: false }, 
-                                    ticks: { color: '#8b9bb4', font: { family: 'Poppins', size: 10 } } 
-                                },
-                                y: { 
-                                    grid: { color: 'rgba(255,255,255,0.03)' }, 
-                                    ticks: { color: '#8b9bb4', font: { family: 'Poppins', size: 11 } },
-                                    border: { display: false }
-                                }
-                            }
-                        }
-                    });
-                    chartInstances.push(chart);
-                });
-
-            } catch (err) {
-                console.error("Error:", err);
-                loading.innerHTML = `
-                    <i class="fa-solid fa-triangle-exclamation" style="color:#ff5252"></i>
-                    <h2 style="color:#ff5252">መረጃ ማግኘት አልተቻለም!</h2>
-                    <p style="color:#8b9bb4; margin-top:10px;">GitHub Actions አዲሱን መረጃ እስኪጽፍ ጥቂት ደቂቃዎች ይጠብቁ ወይም የ Github ሴቲንግዎን ያረጋግጡ።</p>
-                `;
-            } finally {
-                if (isManualRefresh) {
-                    setTimeout(() => {
-                        refreshIcon.classList.remove('spin');
-                        refreshBtn.disabled = false;
-                    }, 500);
-                }
+                renderCoinList();
+            } catch (e) {
+                console.error("Error loading data:", e);
+                document.getElementById('coin-list').innerHTML = `<p style="text-align:center; color:#ef4444;">Failed to load data. Please run GitHub Actions.</p>`;
             }
         }
 
-        // Helper for point background
-        function varBgColor() {
-            return getComputedStyle(document.documentElement).getPropertyValue('--bg-color').trim() || '#07090e';
+        function renderCoinList() {
+            let listHTML = '';
+            globalData.forEach((item, index) => {
+                let isPos = item.market.price_change_pct >= 0;
+                let changeClass = isPos ? 'positive' : 'negative';
+                let sign = isPos ? '+' : '';
+                
+                listHTML += `
+                    <div class="coin-card" onclick="openDetail(${index})">
+                        <div class="coin-info">
+                            <span class="coin-name">${item.symbol}</span>
+                            <span class="coin-symbol">${item.full_symbol}</span>
+                        </div>
+                        <div class="coin-price-box">
+                            <div class="coin-price">$${item.market.price.toLocaleString(undefined, {minimumFractionDigits: 2})}</div>
+                            <div class="coin-change ${changeClass}">${sign}${item.market.price_change_pct.toFixed(2)}%</div>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('coin-list').innerHTML = listHTML;
         }
 
-        // Initial Load
+        function openDetail(index) {
+            let item = globalData[index];
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('detail-view').style.display = 'flex';
+
+            document.getElementById('det-title').innerText = item.symbol;
+            document.getElementById('det-subtitle').innerText = item.full_symbol;
+            document.getElementById('det-price').innerText = `$${item.market.price.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+            
+            let isPos = item.market.price_change_pct >= 0;
+            let changeEl = document.getElementById('det-change');
+            changeEl.className = `coin-change ${isPos ? 'positive' : 'negative'}`;
+            changeEl.innerText = `${isPos ? '+' : ''}${item.market.price_change_pct.toFixed(2)}% (24h)`;
+
+            let badge = document.getElementById('det-badge');
+            if (item.ai.signal === "BULLISH") {
+                badge.className = "signal-badge badge-bullish";
+                badge.innerHTML = `🚀 BULLISH (${item.ai.confidence}%)`;
+            } else {
+                badge.className = "signal-badge badge-bearish";
+                badge.innerHTML = `🔻 BEARISH (${item.ai.confidence}%)`;
+            }
+
+            document.getElementById('det-summary').innerText = item.ai.summary;
+
+            renderChart(item.market.history, [item.ai.pred_15m, item.ai.pred_30m, item.ai.pred_60m]);
+        }
+
+        function goBack() {
+            document.getElementById('detail-view').style.display = 'none';
+            document.getElementById('home-view').style.display = 'block';
+            if (myChart) myChart.destroy();
+        }
+
+        function renderChart(history, predictions) {
+            const ctx = document.getElementById('cryptoChart').getContext('2d');
+            if (myChart) myChart.destroy();
+
+            let labels = [];
+            for (let i = history.length; i > 0; i--) {
+                labels.push(`-${i * 15}m`);
+            }
+            labels.push("Now");
+            labels.push("+15m");
+            labels.push("+30m");
+            labels.push("+60m");
+
+            let historyDataPoints = [...history, history[history.length - 1]];
+            let predictionDataPoints = new Array(history.length).fill(null);
+            predictionDataPoints.push(history[history.length - 1]);
+            predictionDataPoints.push(...predictions);
+
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Market History',
+                            data: historyDataPoints,
+                            borderColor: '#38bdf8',
+                            backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 2
+                        },
+                        {
+                            label: 'AI Prediction',
+                            data: predictionDataPoints,
+                            borderColor: '#10b981',
+                            borderDash: [5, 5],
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: '#21262d' }, ticks: { color: '#8b949e', font: { size: 10 } } },
+                        y: { grid: { color: '#21262d' }, ticks: { color: '#8b949e', font: { size: 10 } } }
+                    }
+                }
+            });
+        }
+
         loadData();
-
-        // Auto refresh every 5 minutes on the frontend (Action runs every 15m)
-        setInterval(() => {
-            loadData(true);
-        }, 300000); 
-
     </script>
 </body>
 </html>
