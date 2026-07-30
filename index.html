@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto AI Predictor - Live</title>
+    <title>Crypto AI Predictor - Google Style</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -39,8 +39,6 @@
         .badge-bearish { background: rgba(242, 139, 130, 0.15); color: #f28b82; border: 1px solid rgba(242, 139, 130, 0.3); }
         
         .price-display { font-size: 32px; font-weight: 400; color: #fff; }
-        
-        /* Google Finance Style Hover Info Box */
         .hover-info { font-size: 13px; color: #9aa0a6; min-height: 20px; font-weight: 400; }
 
         .chart-container { position: relative; width: 100%; height: 230px; margin-top: 5px; }
@@ -79,7 +77,6 @@
                     <div id="det-change" class="coin-change positive">+0.00% today</div>
                 </div>
                 
-                <!-- Google Finance Style Hover Display Bar -->
                 <div id="hover-info" class="hover-info">Hover over the chart to inspect values</div>
 
                 <div class="chart-container">
@@ -160,7 +157,7 @@
             document.getElementById('det-subtitle').innerText = symbol + "USDT";
             
             updateDetailLive(symbol);
-            await loadChartHistory(symbol);
+            await loadGoogleStyleChart(symbol);
         }
 
         function updateDetailLive(symbol) {
@@ -174,23 +171,41 @@
             changeEl.innerText = `${isPos ? '+' : ''}${data.change.toFixed(2)}% today`;
         }
 
-        async function loadChartHistory(symbol) {
+        async function loadGoogleStyleChart(symbol) {
             let binanceSymbol = symbol + "USDT";
             try {
-                let res = await fetch(`https://api.binance.com/api/v3/klines?symbol=${binanceSymbol}&interval=15m&limit=10`);
+                // 1h candles to match Google Finance 1D chart layout showing hourly progression
+                let res = await fetch(`https://api.binance.com/api/v3/klines?symbol=${binanceSymbol}&interval=1h&limit=24`);
                 let candles = await res.json();
-                let history = candles.map(c => parseFloat(c[4])); 
                 
+                let labels = [];
+                let history = [];
+                
+                candles.forEach(c => {
+                    let date = new Date(c[0]);
+                    let hours = date.getHours().toString().padStart(2, '0') + ":00";
+                    labels.push(hours);
+                    history.push(parseFloat(c[4])); 
+                });
+
                 let cp = history[history.length - 1];
+                
+                // Dynamic AI prediction updating relative to live price change trends
+                let trendMultiplier = (marketData[symbol] && marketData[symbol].change >= 0) ? 1.002 : 0.998;
                 let predictions = [
-                    parseFloat((cp * 1.0012).toFixed(2)),
-                    parseFloat((cp * 1.0025).toFixed(2)),
-                    parseFloat((cp * 1.0045).toFixed(2))
+                    parseFloat((cp * (trendMultiplier > 1 ? 1.001 : 0.999)).toFixed(2)),
+                    parseFloat((cp * (trendMultiplier > 1 ? 1.0025 : 0.9975)).toFixed(2)),
+                    parseFloat((cp * (trendMultiplier > 1 ? 1.004 : 0.996)).toFixed(2))
                 ];
 
-                renderChart(history, predictions);
+                labels.push("Now");
+                labels.push("+1h");
+                labels.push("+2h");
+                labels.push("+3h");
+
+                renderGoogleChart(labels, history, predictions);
             } catch (e) {
-                console.error("Chart load error:", e);
+                console.error("Google chart load error:", e);
             }
         }
 
@@ -202,18 +217,9 @@
             fetchMarketData();
         }
 
-        function renderChart(history, predictions) {
+        function renderGoogleChart(labels, history, predictions) {
             const ctx = document.getElementById('cryptoChart').getContext('2d');
             if (myChart) myChart.destroy();
-
-            let labels = [];
-            for (let i = history.length; i > 0; i--) {
-                labels.push(`-${i * 15}m`);
-            }
-            labels.push("Now");
-            labels.push("+15m");
-            labels.push("+30m");
-            labels.push("+60m");
 
             let historyDataPoints = [...history, history[history.length - 1]];
             let predictionDataPoints = new Array(history.length).fill(null);
@@ -264,7 +270,7 @@
                     plugins: {
                         legend: { display: false },
                         tooltip: {
-                            enabled: false, // Disabling default tooltip to use Google Finance style text bar above
+                            enabled: false,
                             external: function(context) {
                                 let tooltipModel = context.tooltip;
                                 let hoverInfoEl = document.getElementById('hover-info');
@@ -288,7 +294,11 @@
                     scales: {
                         x: { 
                             grid: { display: false }, 
-                            ticks: { color: '#9aa0a6', font: { size: 11 } },
+                            ticks: { 
+                                color: '#9aa0a6', 
+                                font: { size: 10 },
+                                maxTicksLimit: 6 
+                            },
                             border: { color: '#3c4043' }
                         },
                         y: { 
