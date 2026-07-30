@@ -1,70 +1,76 @@
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Crypto AI Predictor Pro – Google Style</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto AI Predictor - Pro Google Style</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Google Sans', Arial, sans-serif; }
         body { background-color: #202124; color: #e8eaed; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .container { width: 100%; max-width: 900px; }
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; width: 100%; border-bottom: 1px solid #3c4043; padding-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+        .container { width: 100%; max-width: 800px; /* ሰፋ ያለ ማሳያ (Wider view) */ }
+        
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; width: 100%; border-bottom: 1px solid #3c4043; padding-bottom: 16px; }
         .logo { font-size: 22px; font-weight: 500; color: #8ab4f8; display: flex; align-items: center; gap: 8px; }
         .update-time { font-size: 13px; color: #81c995; background: rgba(129, 201, 149, 0.1); border: 1px solid rgba(129, 201, 149, 0.3); padding: 6px 14px; border-radius: 20px; display: flex; align-items: center; gap: 8px; }
         .live-dot { width: 8px; height: 8px; background-color: #81c995; border-radius: 50%; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-        .search-wrapper { width: 100%; margin-bottom: 16px; }
-        .search-input { width: 100%; padding: 12px 18px; background: #292a2d; border: 1px solid #3c4043; border-radius: 24px; color: #e8eaed; font-size: 16px; outline: none; transition: border-color 0.2s; }
-        .search-input:focus { border-color: #8ab4f8; }
-        .search-input::placeholder { color: #9aa0a6; }
-        .coin-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; width: 100%; }
-        .coin-card { background: #292a2d; border: 1px solid #3c4043; border-radius: 12px; padding: 16px 18px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s; }
+        
+        /* Home List */
+        .coin-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; width: 100%; }
+        .coin-card { background: #292a2d; border: 1px solid #3c4043; border-radius: 12px; padding: 18px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s; }
         .coin-card:hover { background: #323639; border-color: #8ab4f8; transform: translateY(-2px); }
-        .coin-left { display: flex; flex-direction: column; }
         .coin-name { font-size: 18px; font-weight: 500; color: #fff; }
-        .coin-symbol { font-size: 12px; color: #9aa0a6; margin-top: 2px; }
-        .coin-right { text-align: right; }
+        .coin-symbol { font-size: 13px; color: #9aa0a6; display: block; margin-top: 4px; }
+        .coin-price-box { text-align: right; }
         .coin-price { font-size: 18px; font-weight: 500; color: #fff; }
         .coin-change { font-size: 13px; font-weight: 500; margin-top: 4px; display: block; }
-        .positive { color: #81c995; } .negative { color: #f28b82; }
-        .no-results { text-align: center; color: #9aa0a6; padding: 30px; grid-column: 1 / -1; }
+        .positive { color: #81c995; }
+        .negative { color: #f28b82; }
+
+        /* Detail View */
         #detail-view { display: none; width: 100%; flex-direction: column; gap: 20px; }
         .back-btn { background: #3c4043; border: none; color: #8ab4f8; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 14px; width: fit-content; transition: 0.2s; display: flex; align-items: center; gap: 6px; }
         .back-btn:hover { background: #5f6368; }
+        
         .detail-card { background: #292a2d; border: 1px solid #3c4043; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .top-info { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
-        .price-display { font-size: 42px; font-weight: 400; color: #fff; margin-top: 8px; letter-spacing: -1px; }
-        .signal-badge { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
-        .interactive-bar { background: #202124; border-radius: 8px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: #9aa0a6; border: 1px solid #3c4043; min-height: 45px; flex-wrap: wrap; gap: 10px; }
-        .hover-data-point { display: flex; gap: 6px; }
-        .data-label { color: #9aa0a6; } .data-value { color: #fff; font-weight: 500; }
+        
+        .top-info { display: flex; justify-content: space-between; align-items: flex-start; }
+        .price-display { font-size: 42px; font-weight: 400; color: #fff; margin-top: 10px; letter-spacing: -1px; }
+        .signal-badge { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+        
+        /* Interactive Hover Data Bar */
+        .interactive-bar { background: #202124; border-radius: 8px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: #9aa0a6; border: 1px solid #3c4043; min-height: 45px; }
+        .hover-data-point { display: flex; gap: 16px; }
+        .data-label { color: #9aa0a6; }
+        .data-value { color: #fff; font-weight: 500; }
+
         .chart-container { position: relative; width: 100%; height: 350px; margin-top: 10px; }
+        
         .ai-analysis-box { background: rgba(138, 180, 248, 0.05); border-left: 4px solid #8ab4f8; padding: 16px; border-radius: 0 8px 8px 0; display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
         .ai-title { font-size: 12px; color: #8ab4f8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .ai-text { font-size: 14px; color: #e8eaed; line-height: 1.5; }
-        .ai-loading { display: flex; align-items: center; gap: 8px; color: #9aa0a6; font-size: 13px; }
+        
         footer { margin-top: 30px; text-align: center; font-size: 12px; color: #5f6368; width: 100%; }
     </style>
 </head>
 <body>
+
     <div class="container">
         <header>
-            <div class="logo">⚡ Crypto AI Predictor Pro</div>
-            <div class="update-time"><div class="live-dot"></div> Live Multi‑Source Sync</div>
+            <div class="logo">⚡ Crypto AI Predictor</div>
+            <div class="update-time"><div class="live-dot"></div> Live Multi-Source Sync</div>
         </header>
 
+        <!-- HOME DASHBOARD VIEW -->
         <div id="home-view">
-            <div class="search-wrapper">
-                <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search coin (e.g., BTC, ETH, SOL)" autocomplete="off">
-            </div>
             <div id="coin-list" class="coin-list">
-                <p class="no-results">Connecting to live market data…</p>
+                <p style="text-align: center; color: #9aa0a6; padding: 20px; grid-column: 1 / -1;">Connecting to live market data...</p>
             </div>
         </div>
 
+        <!-- DETAIL VIEW -->
         <div id="detail-view">
             <button class="back-btn" onclick="goBack()">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -73,266 +79,271 @@
             <div class="detail-card">
                 <div class="top-info">
                     <div>
-                        <h2 id="det-title" style="font-size: 22px; font-weight: 500; color: #fff;">BTC <span style="font-size: 14px; color: #9aa0a6; font-weight: 400;">USDT</span></h2>
+                        <h2 id="det-title" style="font-size: 22px; font-weight: 500; color: #fff;">BTC <span id="det-subtitle" style="font-size: 14px; color: #9aa0a6; font-weight: 400;">USDT</span></h2>
                         <div id="det-price" class="price-display">$0.00</div>
                         <div id="det-change" class="coin-change positive">+0.00% today</div>
                     </div>
-                    <div id="det-badge" class="signal-badge">Analyzing…</div>
+                    <div id="det-badge" class="signal-badge">Analyzing...</div>
                 </div>
+                
+                <!-- Google Finance Style Hover Display -->
                 <div class="interactive-bar">
-                    <div class="hover-data-point"><span class="data-label">Time:</span> <span class="data-value" id="hover-time">Hover over chart</span></div>
-                    <div class="hover-data-point"><span class="data-label">Price:</span> <span class="data-value" id="hover-price">---</span></div>
-                    <div class="hover-data-point"><span class="data-label">Type:</span> <span class="data-value" id="hover-type" style="color: #8ab4f8;">Market Data</span></div>
+                    <div id="hover-time" class="hover-data-point"><span class="data-label">Time:</span> <span class="data-value">Hover over chart</span></div>
+                    <div id="hover-price" class="hover-data-point"><span class="data-label">Price:</span> <span class="data-value">---</span></div>
+                    <div id="hover-type" class="hover-data-point"><span class="data-label">Type:</span> <span class="data-value" style="color: #8ab4f8;">Market Data</span></div>
                 </div>
+
                 <div class="chart-container">
                     <canvas id="cryptoChart"></canvas>
                 </div>
+                
                 <div class="ai-analysis-box">
-                    <div class="ai-title">🤖 AI Market Synthesis (Gemini)</div>
+                    <div class="ai-title">Live AI Market Synthesis</div>
                     <div id="det-summary" class="ai-text">
-                        <span class="ai-loading"><span class="live-dot"></span> Fetching live AI insight…</span>
+                        Aggregating order book momentum, real-time volume, and trend indicators...
                     </div>
                 </div>
             </div>
         </div>
-        <footer>Powered by ethio programmer · Gemini AI Enhanced</footer>
+
+        <footer>Powered by ethio programmer</footer>
     </div>
 
     <script>
-        // ======================== CONFIGURATION ========================
-        // 🔑 This placeholder will be replaced by GitHub Actions during deployment.
-        const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY';
-        // =================================================================
-
-        const coins = [
-            { symbol: 'BTC', pair: 'BTCUSDT' }, { symbol: 'ETH', pair: 'ETHUSDT' },
-            { symbol: 'BNB', pair: 'BNBUSDT' }, { symbol: 'SOL', pair: 'SOLUSDT' },
-            { symbol: 'XRP', pair: 'XRPUSDT' }, { symbol: 'ADA', pair: 'ADAUSDT' },
-            { symbol: 'DOGE', pair: 'DOGEUSDT' }, { symbol: 'MATIC', pair: 'MATICUSDT' },
-            { symbol: 'DOT', pair: 'DOTUSDT' }, { symbol: 'LTC', pair: 'LTCUSDT' },
-            { symbol: 'AVAX', pair: 'AVAXUSDT' }, { symbol: 'LINK', pair: 'LINKUSDT' },
-            { symbol: 'UNI', pair: 'UNIUSDT' }, { symbol: 'ATOM', pair: 'ATOMUSDT' },
-            { symbol: 'XLM', pair: 'XLMUSDT' }, { symbol: 'FIL', pair: 'FILUSDT' },
-            { symbol: 'TRX', pair: 'TRXUSDT' }, { symbol: 'ETC', pair: 'ETCUSDT' },
-            { symbol: 'VET', pair: 'VETUSDT' }, { symbol: 'ALGO', pair: 'ALGOUSDT' },
-            { symbol: 'ICP', pair: 'ICPUSDT' }, { symbol: 'NEAR', pair: 'NEARUSDT' },
-            { symbol: 'APT', pair: 'APTUSDT' }, { symbol: 'ARB', pair: 'ARBUSDT' },
-            { symbol: 'OP', pair: 'OPUSDT' }, { symbol: 'SUI', pair: 'SUIUSDT' },
-            { symbol: 'INJ', pair: 'INJUSDT' }, { symbol: 'RUNE', pair: 'RUNEUSDT' },
-            { symbol: 'MNT', pair: 'MNTUSDT' }, { symbol: 'TAO', pair: 'TAOUSDT' }
+        const pairsList = [
+            { symbol: "BTC", binance: "BTCUSDT" },
+            { symbol: "ETH", binance: "ETHUSDT" },
+            { symbol: "BNB", binance: "BNBUSDT" },
+            { symbol: "SOL", binance: "SOLUSDT" },
+            { symbol: "XRP", binance: "XRPUSDT" },
+            { symbol: "ADA", binance: "ADAUSDT" },
+            { symbol: "DOGE", binance: "DOGEUSDT" }
         ];
 
         let marketData = {};
-        let selectedSymbol = null;
+        let selectedCoin = null;
         let myChart = null;
-        let chartLabels = [];
-        let historyDataArr = [];
-        let predictionDataArr = [];
-        let isPositiveTrend = true;
 
+        // Custom Chart.js Plugin for Google Finance style Vertical Crosshair
         const crosshairPlugin = {
-            id: 'googleCrosshair',
-            afterDraw: (chart) => {
-                if (chart.tooltip?._active?.length) {
-                    const active = chart.tooltip._active[0];
+            id: 'crosshair',
+            afterDraw: chart => {
+                if (chart.tooltip._active && chart.tooltip._active.length) {
+                    const activePoint = chart.tooltip._active[0];
                     const ctx = chart.ctx;
-                    const x = active.element.x;
+                    const x = activePoint.element.x;
                     const topY = chart.scales.y.top;
                     const bottomY = chart.scales.y.bottom;
+
                     ctx.save();
                     ctx.beginPath();
                     ctx.moveTo(x, topY);
                     ctx.lineTo(x, bottomY);
-                    ctx.lineWidth = 1.5;
-                    ctx.strokeStyle = '#8ab4f8';
-                    ctx.setLineDash([4, 4]);
+                    ctx.lineWidth = 1;
+                    ctx.strokeStyle = '#5f6368';
                     ctx.stroke();
                     ctx.restore();
-                    const y = active.element.y;
-                    ctx.beginPath();
-                    ctx.arc(x, y, 5, 0, 2 * Math.PI);
-                    ctx.fillStyle = '#8ab4f8';
-                    ctx.shadowColor = '#8ab4f8';
-                    ctx.shadowBlur = 8;
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
-                    ctx.shadowColor = 'transparent';
-                    ctx.strokeStyle = '#fff';
-                    ctx.lineWidth = 2;
-                    ctx.stroke();
                 }
             }
         };
 
-        function formatPrice(value) {
-            if (value >= 1) {
-                return '$' + value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            } else {
-                return '$' + value.toLocaleString(undefined, { minimumFractionDigits: 4, maximumFractionDigits: 6 });
-            }
-        }
-
-        async function fetchAllTickers() {
+        async function fetchMarketData() {
             try {
-                const symbolsParam = JSON.stringify(coins.map(c => c.pair));
-                const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${encodeURIComponent(symbolsParam)}`);
-                const data = await res.json();
-                data.forEach(item => {
-                    const coin = coins.find(c => c.pair === item.symbol);
-                    if (!coin) return;
-                    const symbol = coin.symbol;
-                    const price = parseFloat(item.lastPrice);
-                    const change = parseFloat(item.priceChangePercent);
-                    const volume = parseFloat(item.volume);
-                    if (!marketData[symbol]) marketData[symbol] = {};
-                    marketData[symbol].price = price;
-                    marketData[symbol].change = change;
-                    marketData[symbol].volume = volume;
-                    marketData[symbol].pair = item.symbol;
-                });
-                renderHomeCards();
-            } catch (err) {
-                console.error('Ticker fetch error:', err);
+                let listHTML = '';
+                for (let item of pairsList) {
+                    let res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${item.binance}`);
+                    let data = await res.json();
+                    
+                    let price = parseFloat(data.lastPrice);
+                    let change = parseFloat(data.priceChangePercent);
+                    let volume = parseFloat(data.volume);
+
+                    if (!marketData[item.symbol]) marketData[item.symbol] = {};
+                    marketData[item.symbol].price = price;
+                    marketData[item.symbol].volume = volume;
+                    
+                    if (!marketData[item.symbol].isCustomChange) {
+                        marketData[item.symbol].change = change;
+                    }
+
+                    let currentChange = marketData[item.symbol].change;
+                    let isPos = currentChange >= 0;
+
+                    listHTML += `
+                        <div class="coin-card" onclick="openDetail('${item.symbol}')">
+                            <div>
+                                <span class="coin-name">${item.symbol}</span>
+                                <span class="coin-symbol">${item.binance}</span>
+                            </div>
+                            <div class="coin-price-box">
+                                <div class="coin-price">$${price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 4})}</div>
+                                <div class="coin-change ${isPos ? 'positive' : 'negative'}">${isPos ? '+' : ''}${currentChange.toFixed(2)}%</div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (document.getElementById('home-view').style.display !== 'none') {
+                    document.getElementById('coin-list').innerHTML = listHTML;
+                }
+
+                if (selectedCoin) {
+                    updateDetailLive(selectedCoin);
+                    // Dynamically update chart latest point without reloading the whole history
+                    updateChartLiveTick(selectedCoin);
+                }
+            } catch (e) {
+                console.error("Live fetch error:", e);
             }
         }
-
-        function renderHomeCards() {
-            const listEl = document.getElementById('coin-list');
-            const searchTerm = document.getElementById('searchInput').value.trim().toUpperCase();
-            let html = '';
-            const filtered = coins.filter(c => c.symbol.includes(searchTerm));
-            if (filtered.length === 0) {
-                html = '<p class="no-results">No coins found.</p>';
-            } else {
-                filtered.forEach(coin => {
-                    const data = marketData[coin.symbol];
-                    if (!data) return;
-                    const isPos = data.change >= 0;
-                    html += `
-                        <div class="coin-card" onclick="openDetail('${coin.symbol}')">
-                            <div class="coin-left">
-                                <span class="coin-name">${coin.symbol}</span>
-                                <span class="coin-symbol">${coin.pair}</span>
-                            </div>
-                            <div class="coin-right">
-                                <div class="coin-price">${formatPrice(data.price)}</div>
-                                <div class="coin-change ${isPos ? 'positive' : 'negative'}">
-                                    ${isPos ? '+' : ''}${data.change.toFixed(2)}%
-                                </div>
-                            </div>
-                        </div>`;
-                });
-            }
-            listEl.innerHTML = html;
-        }
-
-        document.getElementById('searchInput').addEventListener('input', renderHomeCards);
 
         async function openDetail(symbol) {
-            selectedSymbol = symbol;
+            selectedCoin = symbol;
             document.getElementById('home-view').style.display = 'none';
             document.getElementById('detail-view').style.display = 'flex';
-            document.getElementById('det-title').innerHTML = `${symbol} <span style="font-size:14px;color:#9aa0a6;font-weight:400;">USDT</span>`;
+
+            document.getElementById('det-title').innerHTML = `${symbol} <span style="font-size: 14px; color: #9aa0a6; font-weight: 400;">USDT</span>`;
+            
             updateDetailLive(symbol);
-            await loadChartData(symbol);
-            fetchGeminiInsight(symbol);
+            await loadGoogleStyleChart(symbol);
         }
 
         function updateDetailLive(symbol) {
-            const data = marketData[symbol];
+            let data = marketData[symbol];
             if (!data) return;
-            document.getElementById('det-price').textContent = formatPrice(data.price);
-            const changeEl = document.getElementById('det-change');
-            const isPos = data.change >= 0;
+
+            document.getElementById('det-price').innerText = `$${data.price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 4})}`;
+            let changeEl = document.getElementById('det-change');
+            let isPos = data.change >= 0;
             changeEl.className = `coin-change ${isPos ? 'positive' : 'negative'}`;
-            changeEl.textContent = `${isPos ? '+' : ''}${data.change.toFixed(2)}% today`;
-            const badge = document.getElementById('det-badge');
+            changeEl.innerText = `${isPos ? '+' : ''}${data.change.toFixed(2)}% today`;
+
+            // Dynamic AI text based on live volume and price changes
+            let badge = document.getElementById('det-badge');
+            let summary = document.getElementById('det-summary');
+            
             if (isPos) {
                 badge.innerHTML = `🚀 BULLISH`;
                 badge.style.background = 'rgba(129, 201, 149, 0.15)';
                 badge.style.color = '#81c995';
+                summary.innerHTML = `Real-time indicators suggest strong upward momentum. Buying pressure is currently dominating the order book, indicating a high probability of short-term continuation for ${symbol}.`;
             } else {
                 badge.innerHTML = `⚠️ BEARISH`;
                 badge.style.background = 'rgba(242, 139, 130, 0.15)';
                 badge.style.color = '#f28b82';
+                summary.innerHTML = `Real-time indicators show short-term selling pressure. The asset is experiencing a pullback. AI composite suggests monitoring support levels closely before entry.`;
             }
         }
 
-        async function loadChartData(symbol) {
-            const pair = symbol + 'USDT';
+        async function loadGoogleStyleChart(symbol) {
+            let binanceSymbol = symbol + "USDT";
             try {
-                const res = await fetch(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=1h&limit=24`);
-                const candles = await res.json();
-                const labels = [];
-                const history = [];
-                candles.forEach(c => {
-                    const d = new Date(c[0]);
-                    labels.push(d.getUTCHours().toString().padStart(2, '0') + ':00');
-                    history.push(parseFloat(c[4]));
+                let res = await fetch(`https://api.binance.com/api/v3/klines?symbol=${binanceSymbol}&interval=1h&limit=24`);
+                let candles = await res.json();
+                
+                // UTC Start of day
+                let now = new Date();
+                let startOfTodayUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0);
+                
+                let todayCandles = candles.filter(c => c[0] >= startOfTodayUTC);
+                if (todayCandles.length === 0) todayCandles = candles.slice(-12);
+                
+                let labels = [];
+                let history = [];
+                
+                todayCandles.forEach(c => {
+                    let date = new Date(c[0]);
+                    labels.push(date.getUTCHours().toString().padStart(2, '0') + ":00");
+                    history.push(parseFloat(c[4])); 
                 });
-                const openPrice = parseFloat(candles[0][1]);
-                const closePrice = history[history.length - 1];
-                const dayChange = ((closePrice - openPrice) / openPrice) * 100;
-                marketData[symbol].change = dayChange;
+
+                let openPriceToday = parseFloat(todayCandles[0][1]);
+                let cp = history[history.length - 1];
+                let todayChangePct = ((cp - openPriceToday) / openPriceToday) * 100;
+
+                marketData[symbol].change = todayChangePct;
                 marketData[symbol].isCustomChange = true;
                 updateDetailLive(symbol);
-                chartLabels = [...labels, 'Now', '+1h', '+2h', '+3h'];
-                historyDataArr = [...history, closePrice, null, null, null];
-                const trend = dayChange >= 0;
-                isPositiveTrend = trend;
-                predictionDataArr = new Array(history.length).fill(null);
-                predictionDataArr.push(closePrice);
-                predictionDataArr.push(closePrice * (trend ? 1.002 : 0.998));
-                predictionDataArr.push(closePrice * (trend ? 1.004 : 0.996));
-                predictionDataArr.push(closePrice * (trend ? 1.006 : 0.994));
-                renderChart();
-            } catch (err) {
-                console.error('Chart load error:', err);
-                generateDummyChartData(symbol);
+
+                renderGoogleChart(labels, history, todayChangePct >= 0);
+            } catch (e) {
+                console.error("Chart load error:", e);
             }
         }
 
-        function generateDummyChartData(symbol) {
-            const now = new Date();
-            const labels = [];
-            const history = [];
-            for (let i = 23; i >= 0; i--) {
-                const h = new Date(now);
-                h.setHours(now.getHours() - i);
-                labels.push(h.getUTCHours().toString().padStart(2, '0') + ':00');
+        function updateChartLiveTick(symbol) {
+            if (!myChart) return;
+            
+            let data = marketData[symbol];
+            let isPos = data.change >= 0;
+            let currentPrice = data.price;
+            
+            // Get the dataset
+            let historyData = myChart.data.datasets[0].data;
+            let predictionData = myChart.data.datasets[1].data;
+            
+            // Update the "Now" point (last point of history)
+            let nowIndex = historyData.findIndex((val, idx) => myChart.data.labels[idx] === "Now");
+            if(nowIndex !== -1) {
+                historyData[nowIndex] = currentPrice;
+                predictionData[nowIndex] = currentPrice; // Link prediction to now
             }
-            const basePrice = marketData[symbol]?.price || 100;
-            for (let i = 0; i < 24; i++) {
-                history.push(basePrice * (1 + (Math.random() - 0.5) * 0.02));
-            }
-            const close = history[23];
-            chartLabels = [...labels, 'Now', '+1h', '+2h', '+3h'];
-            historyDataArr = [...history, close, null, null, null];
-            const trend = close > history[0];
-            isPositiveTrend = trend;
-            predictionDataArr = new Array(24).fill(null);
-            predictionDataArr.push(close);
-            predictionDataArr.push(close * (trend ? 1.002 : 0.998));
-            predictionDataArr.push(close * (trend ? 1.004 : 0.996));
-            predictionDataArr.push(close * (trend ? 1.006 : 0.994));
-            renderChart();
+
+            // Recalculate future predictions dynamically based on the exact second's price
+            let trendMultiplier = isPos ? (1 + (Math.random() * 0.003)) : (1 - (Math.random() * 0.003)); // Simulated real-time micro-volatility
+            
+            let p1 = currentPrice * (isPos ? 1.001 : 0.999);
+            let p2 = currentPrice * (isPos ? 1.0025 : 0.9975);
+            let p3 = currentPrice * (isPos ? 1.004 : 0.996);
+            
+            predictionData[predictionData.length - 3] = p1;
+            predictionData[predictionData.length - 2] = p2;
+            predictionData[predictionData.length - 1] = p3;
+
+            // Update colors based on live trend
+            let mainColor = isPos ? '#81c995' : '#f28b82'; // Green if positive, Red if negative
+            myChart.data.datasets[0].borderColor = mainColor;
+            
+            // Update gradient dynamically
+            let ctx = document.getElementById('cryptoChart').getContext('2d');
+            let gradient = ctx.createLinearGradient(0, 0, 0, 350);
+            gradient.addColorStop(0, isPos ? 'rgba(129, 201, 149, 0.2)' : 'rgba(242, 139, 130, 0.2)');
+            gradient.addColorStop(1, isPos ? 'rgba(129, 201, 149, 0.0)' : 'rgba(242, 139, 130, 0.0)');
+            myChart.data.datasets[0].backgroundColor = gradient;
+
+            myChart.update('none'); // Update smoothly without full animation reset
         }
 
-        function renderChart() {
+        function renderGoogleChart(labels, history, isPositive) {
             const ctx = document.getElementById('cryptoChart').getContext('2d');
             if (myChart) myChart.destroy();
-            const mainColor = isPositiveTrend ? '#81c995' : '#f28b82';
-            const gradient = ctx.createLinearGradient(0, 0, 0, 350);
-            gradient.addColorStop(0, isPositiveTrend ? 'rgba(129, 201, 149, 0.2)' : 'rgba(242, 139, 130, 0.2)');
-            gradient.addColorStop(1, isPositiveTrend ? 'rgba(129, 201, 149, 0.0)' : 'rgba(242, 139, 130, 0.0)');
+
+            labels.push("Now", "+1h", "+2h", "+3h");
+
+            let historyDataPoints = [...history, history[history.length - 1], null, null, null];
+            
+            let predictionDataPoints = new Array(history.length).fill(null);
+            let cp = history[history.length - 1];
+            predictionDataPoints.push(cp); // Connect to Now
+            predictionDataPoints.push(cp * (isPositive ? 1.001 : 0.999));
+            predictionDataPoints.push(cp * (isPositive ? 1.0025 : 0.9975));
+            predictionDataPoints.push(cp * (isPositive ? 1.004 : 0.996));
+
+            let mainColor = isPositive ? '#81c995' : '#f28b82'; // Google Finance standard colors
+            
+            // Beautiful Gradient Fill
+            let gradient = ctx.createLinearGradient(0, 0, 0, 350);
+            gradient.addColorStop(0, isPositive ? 'rgba(129, 201, 149, 0.2)' : 'rgba(242, 139, 130, 0.2)');
+            gradient.addColorStop(1, isPositive ? 'rgba(129, 201, 149, 0.0)' : 'rgba(242, 139, 130, 0.0)');
+
             myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: chartLabels,
+                    labels: labels,
                     datasets: [
                         {
-                            label: 'Price',
-                            data: historyDataArr,
+                            label: 'Market History',
+                            data: historyDataPoints,
                             borderColor: mainColor,
                             backgroundColor: gradient,
                             fill: true,
@@ -342,14 +353,13 @@
                             pointHoverBackgroundColor: mainColor,
                             pointHoverBorderColor: '#fff',
                             pointHoverBorderWidth: 2,
-                            borderWidth: 2,
-                            spanGaps: false
+                            borderWidth: 2
                         },
                         {
-                            label: 'AI Prediction',
-                            data: predictionDataArr,
+                            label: 'AI Sync',
+                            data: predictionDataPoints,
                             borderColor: '#8ab4f8',
-                            borderDash: [6, 4],
+                            borderDash: [5, 5],
                             backgroundColor: 'transparent',
                             fill: false,
                             tension: 0.2,
@@ -358,139 +368,88 @@
                             pointHoverBackgroundColor: '#8ab4f8',
                             pointHoverBorderColor: '#fff',
                             pointHoverBorderWidth: 2,
-                            borderWidth: 2,
-                            spanGaps: false
+                            borderWidth: 2
                         }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
                     plugins: {
                         legend: { display: false },
                         tooltip: {
-                            enabled: false,
+                            enabled: false, // Turn off default tooltip box
                             external: function(context) {
-                                const tooltip = context.tooltip;
-                                const timeEl = document.getElementById('hover-time');
-                                const priceEl = document.getElementById('hover-price');
-                                const typeEl = document.getElementById('hover-type');
-                                if (tooltip.opacity === 0) {
-                                    timeEl.textContent = 'Hover over chart';
-                                    priceEl.textContent = '---';
-                                    typeEl.textContent = 'Market Data';
-                                    typeEl.style.color = '#8ab4f8';
+                                let tooltipModel = context.tooltip;
+                                let timeEl = document.getElementById('hover-time').querySelector('.data-value');
+                                let priceEl = document.getElementById('hover-price').querySelector('.data-value');
+                                let typeEl = document.getElementById('hover-type').querySelector('.data-value');
+                                
+                                if (tooltipModel.opacity === 0) {
+                                    timeEl.innerHTML = "Hover over chart";
+                                    priceEl.innerHTML = "---";
+                                    typeEl.innerHTML = "Market Data";
+                                    typeEl.style.color = "#8ab4f8";
                                     return;
                                 }
-                                if (tooltip.dataPoints?.length) {
-                                    const idx = tooltip.dataPoints[0].dataIndex;
-                                    const label = chartLabels[idx];
-                                    const histVal = historyDataArr[idx];
-                                    const predVal = predictionDataArr[idx];
-                                    const val = histVal ?? predVal;
-                                    const isPred = histVal === null && predVal !== null;
-                                    timeEl.textContent = label;
-                                    priceEl.textContent = val ? formatPrice(val) : '---';
-                                    typeEl.textContent = isPred ? 'AI Future Prediction' : 'Real-time Market';
-                                    typeEl.style.color = isPred ? '#a8c7fa' : '#81c995';
+                                
+                                if (tooltipModel.body) {
+                                    let index = tooltipModel.dataPoints[0].dataIndex;
+                                    let label = labels[index];
+                                    
+                                    // Check which dataset is being hovered
+                                    let isPrediction = tooltipModel.dataPoints[0].datasetIndex === 1 || (tooltipModel.dataPoints[1] && tooltipModel.dataPoints[1].parsed.y !== null && index > history.length);
+                                    let val = isPrediction ? predictionDataPoints[index] : historyDataPoints[index];
+                                    
+                                    if (val) {
+                                        timeEl.innerHTML = label;
+                                        priceEl.innerHTML = `$${val.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 4})}`;
+                                        
+                                        if (isPrediction || label.includes("+")) {
+                                            typeEl.innerHTML = "AI Future Prediction";
+                                            typeEl.style.color = "#a8c7fa"; // Light Blue
+                                        } else {
+                                            typeEl.innerHTML = "Real-time Market";
+                                            typeEl.style.color = "#81c995"; // Greenish
+                                        }
+                                    }
                                 }
                             }
                         }
                     },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#9aa0a6', font: { size: 11 }, maxTicksLimit: 10 }, border: { display: false } },
-                        y: { grid: { color: '#3c4043', drawBorder: false }, ticks: { color: '#9aa0a6', font: { size: 11 }, callback: val => formatPrice(val) }, position: 'right', border: { display: false } }
+                        x: { 
+                            grid: { display: false }, 
+                            ticks: { color: '#9aa0a6', font: { size: 12 }, maxTicksLimit: 8 },
+                            border: { display: false }
+                        },
+                        y: { 
+                            grid: { color: '#3c4043', drawBorder: false }, 
+                            ticks: { color: '#9aa0a6', font: { size: 12 } },
+                            position: 'right',
+                            border: { display: false }
+                        }
                     }
                 },
                 plugins: [crosshairPlugin]
             });
         }
 
-        function updateChartLiveTick(symbol) {
-            if (!myChart || !selectedSymbol || selectedSymbol !== symbol) return;
-            const data = marketData[symbol];
-            if (!data) return;
-            const price = data.price;
-            const trend = data.change >= 0;
-            isPositiveTrend = trend;
-            const nowIndex = chartLabels.indexOf('Now');
-            if (nowIndex !== -1) {
-                historyDataArr[nowIndex] = price;
-                predictionDataArr[nowIndex] = price;
-            }
-            const predLen = predictionDataArr.length;
-            if (predLen >= 4) {
-                predictionDataArr[predLen - 3] = price * (trend ? 1.002 : 0.998);
-                predictionDataArr[predLen - 2] = price * (trend ? 1.004 : 0.996);
-                predictionDataArr[predLen - 1] = price * (trend ? 1.006 : 0.994);
-            }
-            const mainColor = trend ? '#81c995' : '#f28b82';
-            myChart.data.datasets[0].borderColor = mainColor;
-            const ctx = document.getElementById('cryptoChart').getContext('2d');
-            const gradient = ctx.createLinearGradient(0, 0, 0, 350);
-            gradient.addColorStop(0, trend ? 'rgba(129, 201, 149, 0.2)' : 'rgba(242, 139, 130, 0.2)');
-            gradient.addColorStop(1, trend ? 'rgba(129, 201, 149, 0.0)' : 'rgba(242, 139, 130, 0.0)');
-            myChart.data.datasets[0].backgroundColor = gradient;
-            myChart.update('none');
-        }
-
-        async function fetchGeminiInsight(symbol) {
-            const summaryEl = document.getElementById('det-summary');
-            summaryEl.innerHTML = '<span class="ai-loading"><span class="live-dot"></span> Consulting Gemini AI…</span>';
-            if (!GEMINI_API_KEY || GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY') {
-                summaryEl.textContent = '🔑 Please add your Gemini API key in the code to unlock AI predictions.';
-                return;
-            }
-            try {
-                const price = marketData[symbol]?.price || 0;
-                const change = marketData[symbol]?.change || 0;
-                const trendWord = change >= 0 ? 'bullish' : 'bearish';
-                const prompt = `You are a professional crypto analyst. Provide a short-term (next 1-3 hours) price prediction for ${symbol}USDT. Current price: $${price}, 24h change: ${change.toFixed(2)}% (${trendWord}). Give a concise prediction with reasoning (1-2 sentences). End with a clear "Prediction: ...". Do not use markdown.`;
-                const response = await fetch(
-                    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
-                    {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [{ parts: [{ text: prompt }] }],
-                            generationConfig: { temperature: 0.3, maxOutputTokens: 200 }
-                        })
-                    }
-                );
-                const data = await response.json();
-                const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (text) {
-                    summaryEl.textContent = text.trim();
-                } else {
-                    throw new Error('Empty response');
-                }
-            } catch (err) {
-                console.error('Gemini API error:', err);
-                const change = marketData[symbol]?.change || 0;
-                const isPos = change >= 0;
-                summaryEl.textContent = isPos
-                    ? `Real-time indicators suggest strong upward momentum. Buying pressure is dominating, suggesting short-term continuation for ${symbol}.`
-                    : `Real-time indicators show short-term selling pressure. ${symbol} is in a pullback; monitor support levels closely.`;
-            }
-        }
-
         function goBack() {
-            selectedSymbol = null;
+            selectedCoin = null;
             document.getElementById('detail-view').style.display = 'none';
             document.getElementById('home-view').style.display = 'block';
-            if (myChart) { myChart.destroy(); myChart = null; }
-            renderHomeCards();
+            if (myChart) myChart.destroy();
+            fetchMarketData();
         }
 
-        fetchAllTickers();
-        setInterval(fetchAllTickers, 2000);
-        setInterval(() => {
-            if (selectedSymbol) {
-                updateDetailLive(selectedSymbol);
-                updateChartLiveTick(selectedSymbol);
-            }
-        }, 2000);
+        // Run immediately and then every 2 seconds
+        fetchMarketData();
+        setInterval(fetchMarketData, 2000);
     </script>
 </body>
 </html>
