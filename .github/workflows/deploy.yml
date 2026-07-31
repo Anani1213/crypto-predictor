@@ -1,40 +1,29 @@
-name: Crypto AI Predictor Bot
+name: Deploy Crypto Predictor to GitHub Pages
 
 on:
-  schedule:
-    # በየ 15 ደቂቃው አውቶማቲክ እንዲሰራ (Cron)
-    - cron: '*/15 * * * *'
-  workflow_dispatch: # በእጅ መጀመር ሲፈልጉ
+  push:
+    branches:
+      - main # የ branch-ህ ስም main ካልሆነ እዚህ ጋር አስተካክለው (ለምሳሌ master)
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
+    
     steps:
-      - name: Code Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Python ማዋቀር
-        uses: actions/setup-python@v4
+      - name: Inject Gemini API Key into HTML
+        # ይህ ኮድ `___GEMINI_API_KEY___` የሚለውን ፈልጎ አንተ በፎቶው ባሳየኸኝ Secret ይተካዋል
+        run: |
+          sed -i "s/___GEMINI_API_KEY___/${{ secrets.GEMINI_API_KEY }}/g" index.html
+
+      - name: Upload artifact for GitHub Pages
+        uses: actions/upload-pages-artifact@v2
         with:
-          python-version: '3.10'
+          path: '.'
 
-      - name: የሚያስፈልጉ Packages መጫን
-        run: |
-          pip install requests
-
-      - name: የ Python AI ትንተናን Run ማድረግ
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: |
-          python fetch_and_predict.py
-
-      - name: አዲሱን data.json ወደ GitHub ማቀበል (Commit)
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json
-          git commit -m "Auto update predictions [skip ci]" || exit 0
-          git push
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
