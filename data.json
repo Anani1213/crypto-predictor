@@ -1,33 +1,153 @@
 {
-  "updated_at": "2026-11-14 21:07:16 UTC",
+  "updated_at": "2026-11-15 01:03:11 UTC",
   "data": [
     {
       "symbol": "BTC",
       "full_symbol": "BTCUSDT",
       "market": {
         "symbol": "BTC",
-        "price": 64697.875820990674,
-        "high_24h": 66158.72901114199,
-        "low_24h": 64047.143193005526,
-        "volume_24h": 970468137.3148601,
+        "price": 63386.396223571035,
+        "high_24h": 64432.365878173005,
+        "low_24h": 62752.53226133533,
+        "volume_24h": 950795943.3535656,
         "price_change_pct": 2.5,
         "history": [
-          65380.34947886339,
-          65503.692090239594,
-          65413.12987976486,
-          65402.308512095165,
-          64887.21741337864,
-          64831.88673943902,
-          64694.08403333891,
-          64697.875820990674
+          63779.12357296694,
+          63732.25711253492,
+          63713.45145636722,
+          63794.42166155743,
+          63618.5573117698,
+          63513.33186870308,
+          63431.105585693615,
+          63386.396223571035
         ]
       },
       "ai": {
         "signal": "BULLISH",
         "confidence": 75,
-        "pred_15m": 64762.5737,
-        "pred_30m": 64827.2716,
-        "pred_60m": 64891.9694,
+        "pred_15m": 63449.7826,
+        "pred_30m": 63513.169,
+        "pred_60m": 63576.5554,
+        "summary": "Market conditions remain stable with positive short-term indicators."
+      }
+    },
+    {
+      "symbol": "ETH",
+      "full_symbol": "ETHUSDT",
+      "market": {
+        "symbol": "ETH",
+        "price": 1739.4689842109817,
+        "high_24h": 1772.7842331377024,
+        "low_24h": 1722.074294368872,
+        "volume_24h": 26092034.763164725,
+        "price_change_pct": 2.5,
+        "history": [
+          1753.7543779913747,
+          1752.7406470202002,
+          1751.0216133541633,
+          1755.231913997725,
+          1749.439971029756,
+          1743.6964449043699,
+          1740.8032502392816,
+          1739.4689842109817
+        ]
+      },
+      "ai": {
+        "signal": "BULLISH",
+        "confidence": 75,
+        "pred_15m": 1741.2085,
+        "pred_30m": 1742.9479,
+        "pred_60m": 1744.6874,
+        "summary": "Market conditions remain stable with positive short-term indicators."
+      }
+    },
+    {
+      "symbol": "BNB",
+      "full_symbol": "BNBUSDT",
+      "market": {
+        "symbol": "BNB",
+        "price": 575.2704052042751,
+        "high_24h": 585.8980084498264,
+        "low_24h": 569.5177011522323,
+        "volume_24h": 8629056.078064127,
+        "price_change_pct": 2.5,
+        "history": [
+          578.2928148450872,
+          578.0760202865704,
+          579.1505416213762,
+          580.097038069135,
+          578.7505549570303,
+          577.2673403612954,
+          576.115296229186,
+          575.2704052042751
+        ]
+      },
+      "ai": {
+        "signal": "BULLISH",
+        "confidence": 75,
+        "pred_15m": 575.8457,
+        "pred_30m": 576.4209,
+        "pred_60m": 576.9962,
+        "summary": "Market conditions remain stable with positive short-term indicators."
+      }
+    },
+    {
+      "symbol": "SOL",
+      "full_symbol": "SOLUSDT",
+      "market": {
+        "symbol": "SOL",
+        "price": 69.27444000687592,
+        "high_24h": 70.67439139118359,
+        "low_24h": 68.58169560680716,
+        "volume_24h": 1039116.6001031388,
+        "price_change_pct": 2.5,
+        "history": [
+          69.81082441987941,
+          69.93545607287302,
+          69.90704930334418,
+          69.97464494176593,
+          69.75635077301006,
+          69.5384812093501,
+          69.41441074537279,
+          69.27444000687592
+        ]
+      },
+      "ai": {
+        "signal": "BULLISH",
+        "confidence": 75,
+        "pred_15m": 69.3437,
+        "pred_30m": 69.413,
+        "pred_60m": 69.4823,
+        "summary": "Market conditions remain stable with positive short-term indicators."
+      }
+    },
+    {
+      "symbol": "XRP",
+      "full_symbol": "XRPUSDT",
+      "market": {
+        "symbol": "XRP",
+        "price": 0.9190303546731665,
+        "high_24h": 0.9386746339965101,
+        "low_24h": 0.9098400511264348,
+        "volume_24h": 13785.455320097497,
+        "price_change_pct": 2.5,
+        "history": [
+          0.9230566801960584,
+          0.9235079038947863,
+          0.9269945250772793,
+          0.9293808257391188,
+          0.9247682239606556,
+          0.9217186960586097,
+          0.9222158024970123,
+          0.9190303546731665
+        ]
+      },
+      "ai": {
+        "signal": "BULLISH",
+        "confidence": 75,
+        "pred_15m": 0.9199,
+        "pred_30m": 0.9209,
+        "pred_60m": 0.9218,
         "summary": "Market conditions remain stable with positive short-term indicators."
       }
     }
